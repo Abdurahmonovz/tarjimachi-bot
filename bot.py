@@ -1,20 +1,27 @@
 import logging
 import asyncio
+import os
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from googletrans import Translator
 from deep_translator import GoogleTranslator
+from dotenv import load_dotenv
 import json
-import os
+
+# Load environment variables
+load_dotenv()
 
 # Logging sozlash
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Bot tokenini kiriting
-API_TOKEN = '7854486492:AAHfV_SsV_lErMFzHFZFAQxGFofR4zoQ0Q4'
+# Bot tokenini environment dan olish
+API_TOKEN = os.getenv('BOT_TOKEN')
+
+if not API_TOKEN:
+    raise ValueError("BOT_TOKEN environment variable is not set!")
 
 # Bot obyektlari
 bot = Bot(token=API_TOKEN)
@@ -83,7 +90,7 @@ async def send_welcome(message: types.Message):
     *Foydalanish uchun:*
     1. Quyidagi tugmalardan til juftligini tanlang
     2. Tarjima qilmoqchi bo'lgan matningizni yuboring
-    3️⃣ Natijani darhol oling!
+    3. Natijani darhol oling!
 
     📝 *Mavjud tillar:*
     • O'zbekcha ⇄ Ruscha
@@ -298,6 +305,7 @@ async def handle_inline_buttons(callback_query: types.CallbackQuery):
 # Botni ishga tushirish
 async def main():
     logger.info("Bot ishga tushmoqda...")
+    logger.info(f"Bot token: {API_TOKEN[:10]}... (yashirin)")
     await dp.start_polling(bot)
 
 
