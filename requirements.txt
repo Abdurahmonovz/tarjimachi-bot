@@ -1,3 +1,4 @@
-aiogram
-deep-translator
-python-dotenv
+aiogram==3.3.0
+googletrans==4.0.0rc1
+deep-translator==1.11.4
+python-dotenv==1.0.0aiohttp
